@@ -1,2 +1,2 @@
 # cheatcode
-A MERN Stack application
+A MERN stack application like leetcode or any other problem solving.
