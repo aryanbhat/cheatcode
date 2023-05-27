@@ -1,9 +1,19 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const port = 3000;
+const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const alert = require('alert');
 
+
+app.use(session({
+  secret:"cheatcode",
+  saveUninitialized: true,
+  resave: true
+}))
+
+app.use(flash());
 
 app.use(bodyParser.urlencoded({extended: true}));
 const users = [];
@@ -36,7 +46,8 @@ app.post('/signup',(req,res)=>{
     }
   }
   if(check != password){
-    res.send("passwords do not match");
+
+    res.send("Passwords do not match");
   }
   else if(exists){
     res.send("User already exists");
@@ -47,7 +58,7 @@ app.post('/signup',(req,res)=>{
       password: password
     }
     users.push(newUser);
-    res.sendStatus(200);
+    res.redirect('/login');
   }
 });
 
@@ -64,8 +75,7 @@ app.post('/login',(req,res)=>{
     }
   }
   if(!exists){
-    alert("user does not exist");
-    res.redirect('/signup');
+    res.send("User does not exist");
   }
   else if(check != password){
     res.send("Incorrect password");
