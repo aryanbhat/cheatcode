@@ -1,19 +1,27 @@
 const express = require('express');
-const session = require('express-session');
 const app = express();
 const port = 3000;
-const flash = require('connect-flash');
 const bodyParser = require('body-parser');
-const alert = require('alert');
 
 
-app.use(session({
-  secret:"cheatcode",
-  saveUninitialized: true,
-  resave: true
-}))
-
-app.use(flash());
+let problems = [
+  {
+    id: 1,
+    name: "Two Sum",
+    desc: "Given an array of integers, return indices of the two numbers such that they add up to a specific target.",
+    difficulty: "Easy",
+    tags: ["Array","Hash Table"],
+    example: "Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1]."
+  },
+  {
+    id: 2,
+    name: "Add Two Numbers",
+    desc: "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit.",
+    difficulty: "Medium",
+    tags: ["Linked List","Math"],
+    example: "Input: (2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 0 -> 8 Explanation: 342 + 465 = 807."
+  }
+]
 
 app.use(bodyParser.urlencoded({extended: true}));
 const users = [];
@@ -85,7 +93,7 @@ app.post('/login',(req,res)=>{
   }
 });
 app.get('/problems',(req,res)=>{
-  res.send("problems");
+  res.json(problems);
 });
 
 app.get('/submission',(req,res)=>{
