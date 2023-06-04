@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submissions</title>
+  <style>
+    .flex{
+      display: flex;
+      flex-direction: column;
+      margin-top: 3vh;
+    }
+  </style>
+</head>
+<body>
+  <h1>Submission</h1>
+  <form method="post" action="/submission">
+    <div class="flex">
+      <label>QID</label>
+        <input type="number" name="qid" placeholder="enter the Question ID">
+      </div>
+      <div class="flex">
+      <label>Code</label>
+        <textarea rows="20" cols="40" name="code" placeholder="This is the default text"></textarea>
+      </div>
+      <div class="flex">
+        <label for="language">Language</label>
+        <input type="text" name="language" placeholder="Enter the coding language">
+      </div>
+      <div class="flex">
+        <input type="submit">
+      </div>
+  </form>
+</body>
+</html>

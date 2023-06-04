@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
-
+let submissionID = 3;
 
 let problems = [
   {
@@ -20,10 +20,35 @@ let problems = [
     difficulty: "Medium",
     tags: ["Linked List","Math"],
     example: "Input: (2 -> 4 -> 3) + (5 -> 6 -> 4) Output: 7 -> 0 -> 8 Explanation: 342 + 465 = 807."
+  },
+  {
+    id: 3,
+    name: "Longest Substring Without Repeating Characters",
+    desc: "Given a string, find the length of the longest substring without repeating characters.",
+    difficulty: "Medium",
+    tags: ["Hash Table","Two Pointers","String"],
+    example: "Input: 'abcabcbb' Output: 3 Explanation: The answer is 'abc', with the length of 3."
   }
 ]
 
-app.use(bodyParser.urlencoded({extended: true}));
+let submissions = [
+  {
+    id: 1,
+    solution: "class Solution { public int[] twoSum(int[] nums, int target) { for (int i = 0; i < nums.length; i++) { for (int j = i + 1; j < nums.length; j++) { if (nums[j] == target - nums[i]) { return new int[] { i, j }; } } } throw new IllegalArgumentException('No two sum solution'); } }",
+    language: "Java",
+    status: "Accepted"
+  },
+  {
+    id: 2,
+    problem: 1,
+    solution: "class Solution { public int[] twoSum(int[] nums, int target) { for (int i = 0; i < nums.length; i++) { for (int j = i + 1; j < nums.length; j++) { if (nums[j] == target - nums[i]) { return new int[] { i, j }; } } } throw new IllegalArgumentException('No two sum solution'); } }",
+    language: "C++",
+    status: "Accepted"
+  }
+]
+
+
+    app.use(bodyParser.urlencoded({extended: true}));
 const users = [];
 
 app.get('/user',(req,res)=>{
@@ -97,8 +122,28 @@ app.get('/problems',(req,res)=>{
 });
 
 app.get('/submission',(req,res)=>{
-  res.send("submission");
+  res.sendFile(__dirname + '/static/submission.html');
 });
+
+app.post('/submission',(req,res)=>{
+  let qid = req.body.qid;
+  let code = req.body.code;
+  let lang = req.body.lang;
+  let newSubmission = {
+    id: submissionID,
+    problem: qid,
+    solution: code,
+    language: lang,
+    status: "Pending"
+  }
+  submissions.push(newSubmission);
+  res.redirect('/submissions');
+}
+);
+
+app.get('/submissions',(req,res)=>{
+  res.json(submissions);
+})
 
 app.listen(port, ()=>{
   console.log("app running on port " + port);
